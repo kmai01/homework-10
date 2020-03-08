@@ -36,73 +36,57 @@ function promptUser() {
       message: "Which type of team member would you like to add?"
     },
     
+    
+]);
+
+}
+
+function promptEngineer() {
+return inquirer.prompt(
+  [
+  {
+    type: "input",
+    name: "name",
+    message: "What is your engineer's name?"
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "What is your engineer's id?"
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is your engineer's email?"
+  },
+  {
+    type: "input",
+    name: "officenumber",
+    message: "What is your engineer's GitHub username?"
+  },
+  {
+    type: "input",
+    name: "role",
+    message: "Which type of team member would you like to add?"
+  },
+  
 ]);
 
 }
 
 
 
-
 promptUser()
   .then(function(answers) {
+
     console.log(answers.role)
 
     if ( answers.role="Engineer") {
-      function promptEngineerUser() {
-        return inquirer.prompt([
-          {
-            type: "input",
-            name: "name",
-            message: "What is your engineer's name?"
-          },
-          {
-            type: "input",
-            name: "id",
-            message: "What is your engineer's id?"
-          },
-          {
-            type: "input",
-            name: "email",
-            message: "What is your engineer's email?"
-          },
-          {
-            type: "input",
-            name: "officenumber",
-            message: "What is your engineer's GitHub username?"
-          },
-          {
-            type: "input",
-            name: "role",
-            message: "Which type of team member would you like to add?"
-          },
-          
-      ]);
       
+      promptEngineer()
+
       }
-    
-      promptEngineerUser()
-      .then(function(answers) {
-        console.log(answers.role)
-        //const html = generateHTML(answers);
-    
-        // return writeFileAsync("index.html", html);
-      })
-      .then(function() {
-        console.log("Successfully wrote to  1 index.html");
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-    
-
-    }
-    //const html = generateHTML(answers);
-
-    // return writeFileAsync("index.html", html);
-  })
   
 
+    });
 
-
-
- 
