@@ -37,19 +37,72 @@ function promptUser() {
     },
     
 ]);
+
 }
+
 
 
 
 promptUser()
   .then(function(answers) {
-    const html = generateHTML(answers);
+    console.log(answers.role)
+
+    if ( answers.role="Engineer") {
+      function promptEngineerUser() {
+        return inquirer.prompt([
+          {
+            type: "input",
+            name: "name",
+            message: "What is your engineer's name?"
+          },
+          {
+            type: "input",
+            name: "id",
+            message: "What is your engineer's id?"
+          },
+          {
+            type: "input",
+            name: "email",
+            message: "What is your engineer's email?"
+          },
+          {
+            type: "input",
+            name: "officenumber",
+            message: "What is your engineer's GitHub username?"
+          },
+          {
+            type: "input",
+            name: "role",
+            message: "Which type of team member would you like to add?"
+          },
+          
+      ]);
+      
+      }
+    
+      promptEngineerUser()
+      .then(function(answers) {
+        console.log(answers.role)
+        //const html = generateHTML(answers);
+    
+        // return writeFileAsync("index.html", html);
+      })
+      .then(function() {
+        console.log("Successfully wrote to  1 index.html");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    
+
+    }
+    //const html = generateHTML(answers);
 
     // return writeFileAsync("index.html", html);
   })
-  .then(function() {
-    console.log("Successfully wrote to index.html");
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
+  
+
+
+
+
+ 
