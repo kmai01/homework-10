@@ -237,7 +237,7 @@ function endHTML() {
     </body>
     </html>`
     return appendFileAsync("main.html", html);
-    console.log("Successfully wrote to main2.html");
+    console.log("Successfully wrote to main.html");
   }
 
 
