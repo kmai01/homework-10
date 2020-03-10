@@ -6,8 +6,8 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 
-//const writeFileAsync = util.promisify(fs.writeFile);
-//const appendFileAsync = util.promisify(fs.appendFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+const appendFileAsync = util.promisify(fs.appendFile);
 
 
 // Ask first set of question
@@ -41,39 +41,45 @@ function promptUser() {
 
     const managerhtml = `
     <!DOCTYPE html>
-   <html lang="en">
-   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Team Builder</title>
-   </head>
-   <body>
-    <div class="jumbotron jumbotron-fluid">
-      <h1> My Team </h1>
-    <div class="container">
-    <div class= "col-sm -3">
-       <div class="card">
-           <div class="card-header">
-               <h3> ${answers.name}</h3>
-               <h3> Manager </h3>
+    <html lang="en">
+    <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+     <title>Team Builder</title>
+    </head>
+    <body>
+     <div class="jumbotron jumbotron-fluid">
+       <h1> My Team </h1>
+     <div class="container">
+     <div class= "col-sm -3">
+        <div class="card">
+              <div class= "col-sm -3">
+                <div class="card">
+                    <div class="card-header">
+                       <h3> ${answers.name}</h3>
+                       <h3> Manager </h3>
 
-            </div>
-           <div class="card-body">
-              <h3> ID: ${answers.id}</h3>
-              <h3> Email : ${answers.email}</h>
-              <h3> Office Number : ${answers.officenumber}</h3>
-          </div>
-        </div>
-        </div>`
+                     </div>
+                    <div class="card-body">
+                      <h3> ID: ${answers.id}</h3>
+                      <h3> Email : ${answers.email}</h>
+                      <h3> Office Number : ${answers.officenumber}</h3>
+                    </div>
+                </div>
+              </div>`
 
-        fs.writeFile("main.html", managerhtml,function (err) {
-          if (err) throw err;
-          console.log('Saved!');
-        });
+    return writeFileAsync("main.html", managerhtml);
 
+  }).then(function () {
+    console.log("Successfully wrote to mainA.html");
+  }).catch(function (err) {
+    console.log(err);
+  
+  });
 
+}
 
 // Ask question about engineer
 
@@ -101,7 +107,7 @@ function promptEngineer() {
         message: "What is your engineer's GitHub username?"
       },
 
-      
+
     ]).then(function (answers) {
 
       const engineerhtml = `
@@ -120,13 +126,12 @@ function promptEngineer() {
           </div>
           </div>`
 
-      fs.appendFileSync("main.html", engineerhtml);
-    })
-    .then(function () {
-      console.log("Successfully wrote to main.html");
-    })
-    .catch(function (err) {
+      return appendFileAsync("main.html", engineerhtml);
+    }).then(function () {
+      console.log("Successfully wrote to mainB.html");
+    }).catch(function (err) {
       console.log(err);
+
       // call select team member choice again after question
     }).then(function (answers) {
 
@@ -159,39 +164,40 @@ function promptIntern() {
         name: "school",
         message: "What school do intern go to?"
       },
+
     ]).then(function (answers) {
 
-        const internhtml = `
-        <div class= "col-sm -3">
-           <div class="card">
-               <div class="card-header">
-                   <h3> ${answers.name}</h3>
-                   <h3> Intern </h3>
-  
-                </div>
-               <div class="card-body">
-                  <h3> ID: ${answers.id}</h3>
-                  <h3> Email : ${answers.email}</h>
-                  <h3> School : ${answers.school}</h3>
+      const internhtml = `
+      <div class= "col-sm -3">
+         <div class="card">
+             <div class="card-header">
+                 <h3> ${answers.name}</h3>
+                 <h3> Intern </h3>
+
               </div>
-            </div>
-            </div>`
-  
-        fs.appendFileSync("main.html", internhtml);
-      })
-      .then(function () {
-        console.log("Successfully wrote to main.html");
-      })
-      .catch(function (err) {
-        console.log(err);
+             <div class="card-body">
+                <h3> ID: ${answers.id}</h3>
+                <h3> Email : ${answers.email}</h>
+                <h3> School : ${answers.school}</h3>
+             </div>
+        </div>
+      </div>`
+
+    return appendFileAsync("main.html", internhtml);
+
+    }).then(function () {
+      console.log("Successfully wrote to main.html");
+    })
+    .catch(function (err) {
+      console.log(err);
+
       // call select team member choice again after question
-      }).then(function (answers) {
+    }).then(function (answers) {
 
       selectTeamMember(answers);
-
-
-    })
+    });
 }
+
 
 
 function selectTeamMember() {
@@ -215,34 +221,33 @@ function selectTeamMember() {
     } else if
       (
       answers.role == "Exit"
-    ) { }
+    ) { endHTML()
+
+    }
   })
 }
 
-function generateHTML(answers) {
-  return `
-  </div>
-  </div>
-  </body>
-  </html>`;
-}
+function endHTML() {
+  const html = `
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </body>
+    </html>`
+    return appendFileAsync("main.html", html);
+    console.log("Successfully wrote to main2.html");
+  }
+
+
 
 
 promptUser()
   .then(function (answers) {
 
-    // call select team member choice 
+    selectTeamMember(answers)
 
-    selectTeamMember(answers);
-
-  })
-  .then(function (answers) {
-    const html = generateHTML(answers);
-
-    fs.appendFileSync("main.html", html);
-  })
-  .then(function () {
-    console.log("Successfully wrote to main.html");
   })
   .catch(function (err) {
     console.log(err);
