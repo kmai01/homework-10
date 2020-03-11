@@ -1,7 +1,3 @@
-const Employee = require("./lib/Employee");
-
-const employee = new Employee()
-
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
@@ -52,11 +48,11 @@ function promptUser() {
     <body>
      <div class="jumbotron jumbotron-fluid">
        <h1> My Team </h1>
+       </div>
      <div class="container">
-     <div class= "col-sm -3">
-        <div class="card">
-              <div class= "col-sm -3">
+         <div class= "col-sm-6">
                 <div class="card">
+              
                     <div class="card-header">
                        <h3> ${answers.name}</h3>
                        <h3> Manager </h3>
@@ -68,12 +64,12 @@ function promptUser() {
                       <h3> Office Number : ${answers.officenumber}</h3>
                     </div>
                 </div>
-              </div>`
+          </div>`
 
     return writeFileAsync("main.html", managerhtml);
 
   }).then(function () {
-    console.log("Successfully wrote to mainA.html");
+    console.log("Successfully wrote to main.html");
   }).catch(function (err) {
     console.log(err);
   
@@ -111,7 +107,7 @@ function promptEngineer() {
     ]).then(function (answers) {
 
       const engineerhtml = `
-      <div class= "col-sm -3">
+      <div class= "col-sm-6">
          <div class="card">
              <div class="card-header">
                  <h3> ${answers.name}</h3>
@@ -128,7 +124,7 @@ function promptEngineer() {
 
       return appendFileAsync("main.html", engineerhtml);
     }).then(function () {
-      console.log("Successfully wrote to mainB.html");
+      console.log("Successfully append to main.html");
     }).catch(function (err) {
       console.log(err);
 
@@ -168,7 +164,7 @@ function promptIntern() {
     ]).then(function (answers) {
 
       const internhtml = `
-      <div class= "col-sm -3">
+      <div class= "col-sm-6">
          <div class="card">
              <div class="card-header">
                  <h3> ${answers.name}</h3>
@@ -229,19 +225,13 @@ function selectTeamMember() {
 
 function endHTML() {
   const html = `
-
-    </div>
-    </div>
-    </div>
     </div>
     </body>
     </html>`
     return appendFileAsync("main.html", html);
-    console.log("Successfully wrote to main.html");
+
+    
   }
-
-
-
 
 promptUser()
   .then(function (answers) {
